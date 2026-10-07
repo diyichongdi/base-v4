@@ -1,0 +1,59 @@
+# 安全设置
+Options -Indexes
+ServerSignature Off
+
+# 禁用PHP暴露
+php_flag expose_php Off
+
+# 保护敏感文件
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(db|sql|sqlite|sqlite3|log|ini|lock|txt|md|bak)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 保护目录
+RedirectMatch 404 /\.git/.*$
+RedirectMatch 404 /lang/.*$
+RedirectMatch 404 /im/data/.*$
+RedirectMatch 404 /im/lib/.*$
+RedirectMatch 404 /database/.*$
+
+# 启用重写
+RewriteEngine On
+
+# 即时通讯 API：/api/* → im/api/index.php（Apache 环境）
+RewriteRule ^api(/.*)?$ im/api/index.php [L,QSA]
+
+# 强制HTTPS（取消注释以启用）
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# 安全头部
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 压缩
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript
+</IfModule>
+
+# 缓存
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

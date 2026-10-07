@@ -1,0 +1,36 @@
+# 运行时数据库（首次启动由 seed 自动重建，不入库）
+database/*.db
+database/*.db-journal
+database/*.db-wal
+database/*.db-shm
+forum/*.db
+forum/*.db-journal
+forum/*.db-wal
+forum/*.db-shm
+im/data/*.db
+im/data/*.db-journal
+im/data/*.db-wal
+im/data/*.db-shm
+
+# 用户上传内容
+im/data/uploads/*
+!im/data/uploads/.gitkeep
+im/data/files/*
+!im/data/files/.gitkeep
+
+# 日志与临时文件
+*.log
+*.bak
+Thumbs.db
+.DS_Store
+
+# 会话工件 / 本地导出（含本地路径，勿公开）
+v5-latest.json
+v5_full.json
+data/bookmarks.html
+
+# PHP 依赖与工具（如有）
+vendor/
+node_modules/
+composer.lock
+package-lock.json
