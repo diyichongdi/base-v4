@@ -3,6 +3,7 @@ database/*.db
 database/*.db-journal
 database/*.db-wal
 database/*.db-shm
+database/*.lock
 forum/*.db
 forum/*.db-journal
 forum/*.db-wal
